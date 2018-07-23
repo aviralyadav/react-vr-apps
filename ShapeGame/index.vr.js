@@ -1,12 +1,12 @@
 import React from 'react';
 import {
   AppRegistry,
-  // AsyncStorage,
+  AsyncStorage,
   Text,
   View,
   StyleSheet
 } from 'react-vr';
-import { AsyncStorage } from 'react-native';
+// import { AsyncStorage } from 'react-native';
 
 import Shape, { shapes } from './vr/components/Shape';
 
@@ -31,8 +31,9 @@ export default class ShapeGame extends React.Component {
   pickShape = (shapeIndex) => {
     let score = this.state.score;
     score = this.state.specialIndex === shapeIndex ? score + 1 : score - 1;
+    console.log(score, JSON.stringify(score));
+    AsyncStorage.setItem('score', 'JSON.stringify(score)');
     this.setState({ score });
-    AsyncStorage.setItem('score', score);
     this.newGameSet();
   }
 
@@ -40,14 +41,14 @@ export default class ShapeGame extends React.Component {
     console.log('New game started!');
 
     let baseShapeId = Math.floor(Math.random() * shapes.length);
-    console.log('baseShapeId', baseShapeId);
+    // console.log('baseShapeId', baseShapeId);
 
     let specialShapeId = baseShapeId;
 
     while (specialShapeId === baseShapeId) {
       specialShapeId = Math.floor(Math.random() * shapes.length);
     }
-    console.log('SpacialShapeId', specialShapeId);
+    // console.log('SpacialShapeId', specialShapeId);
 
     let newGameShapes = [];
 
@@ -57,7 +58,7 @@ export default class ShapeGame extends React.Component {
     let specialIndex = Math.floor(Math.random() * newGameShapes.length);
 
     newGameShapes[specialIndex] = specialShapeId;
-    console.log('newGameShapes', newGameShapes);
+    // console.log('newGameShapes', newGameShapes);
     this.setState({
       gameShapes: newGameShapes,
       specialIndex
